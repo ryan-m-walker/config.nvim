@@ -11,7 +11,7 @@ return {
                 background_clear = {
                     'float_win',
                     'toggleterm',
-                    'telescope',
+                    'fzf-lua',
                     'which-key',
                     'nvim-tree',
                     'bufferline',
