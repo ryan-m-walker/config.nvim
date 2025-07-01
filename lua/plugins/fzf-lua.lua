@@ -4,18 +4,6 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require('fzf-lua').setup({
-                -- Global configuration
-                winopts = {
-                    height = 0.85,
-                    width = 0.80,
-                    row = 0.35,
-                    col = 0.50,
-                    border = 'rounded',
-                    preview = {
-                        layout = 'horizontal',
-                        horizontal = 'right:50%',
-                    },
-                },
                 keymap = {
                     builtin = {
                         ["<C-u>"] = "preview-page-up",
