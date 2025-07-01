@@ -17,6 +17,12 @@ vim.keymap.set('n', '<leader>w\\', ':vsplit<CR>', { noremap = true, silent = tru
 vim.keymap.set('n', '<leader>x', ':bd<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>X', ':bufdo bd<CR>', { noremap = true, silent = true })
 
+vim.keymap.set('n', '<leader>t-', ':split term://zsh<CR>',
+    { noremap = true, silent = true, desc = '[T]erminal split [H]orizontal' })
+vim.keymap.set('n', '<leader>t\\', ':vsplit term://zsh<CR>',
+    { noremap = true, silent = true, desc = '[T]erminal split [V]ertical' })
+
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
