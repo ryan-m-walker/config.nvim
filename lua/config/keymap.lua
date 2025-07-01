@@ -17,10 +17,15 @@ vim.keymap.set('n', '<leader>w\\', ':vsplit<CR>', { noremap = true, silent = tru
 vim.keymap.set('n', '<leader>x', ':bd<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>X', ':bufdo bd<CR>', { noremap = true, silent = true })
 
+-- terminal windows
 vim.keymap.set('n', '<leader>t-', ':split term://zsh<CR>',
     { noremap = true, silent = true, desc = '[T]erminal split [H]orizontal' })
 vim.keymap.set('n', '<leader>t\\', ':vsplit term://zsh<CR>',
     { noremap = true, silent = true, desc = '[T]erminal split [V]ertical' })
+
+-- Don't confuse my coworkers
+vim.keymap.set('n', '<leader>rl', ':set relativenumber!<CR>',
+    { noremap = true, silent = true, desc = 'Toggle [R]elative [L]ine number' })
 
 
 -- Clear highlights on search when pressing <Esc> in normal mode
