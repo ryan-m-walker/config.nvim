@@ -1,3 +1,5 @@
+-- Open your current file in GitHub
+-- https://github.com/trevorhauter/gitportal.nvim
 return {
     {
         'trevorhauter/gitportal.nvim',

@@ -1,3 +1,5 @@
+-- Lightweight yet powerful formatter plugin for Neovim
+-- https://github.com/stevearc/conform.nvim
 return {
     {
         'stevearc/conform.nvim',

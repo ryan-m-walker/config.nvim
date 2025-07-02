@@ -1,3 +1,5 @@
+-- Parser generator tool and an incremental parsing library
+-- https://github.com/nvim-treesitter/nvim-treesitter
 return {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
@@ -18,6 +20,7 @@ return {
                 'vimdoc',
                 'query',
             },
+            sync_install = false,
             auto_install = true,
             highlight = {
                 enable = true,

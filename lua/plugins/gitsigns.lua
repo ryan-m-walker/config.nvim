@@ -1,4 +1,6 @@
-return { -- Adds git related signs to the gutter, as well as utilities for managing changes
+-- Deep buffer integration for Git
+-- https://github.com/lewis6991/gitsigns.nvim
+return {
     {
         'lewis6991/gitsigns.nvim',
         opts = {

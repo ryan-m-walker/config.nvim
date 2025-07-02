@@ -1,3 +1,5 @@
+-- Tiny plugin to enhance Neovim's native comments
+-- folke/ts-comments.nvim
 return {
     'folke/ts-comments.nvim',
     opts = {},

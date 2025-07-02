@@ -1,3 +1,5 @@
+-- Plugin that automatically changes the editor appearance based on system settings
+-- https://github.com/f-person/auto-dark-mode.nvim
 return {
     "f-person/auto-dark-mode.nvim",
     opts = {

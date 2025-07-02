@@ -1,3 +1,5 @@
+-- AI code completion
+-- https://github.com/supermaven-inc/supermaven-nvim
 return {
     "supermaven-inc/supermaven-nvim",
     config = function()

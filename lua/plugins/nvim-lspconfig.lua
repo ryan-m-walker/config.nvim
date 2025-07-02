@@ -1,3 +1,5 @@
+-- Provides configurations for LSP clients
+-- https://github.com/neovim/nvim-lspconfig
 return {
     {
         'neovim/nvim-lspconfig',
@@ -22,27 +24,6 @@ return {
             },
         },
         config = function()
-            -- LSP keymaps
-            vim.api.nvim_create_autocmd('LspAttach', {
-                group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
-                callback = function(event)
-                    local map = function(keys, func, desc)
-                        vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-                    end
-
-                    map('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-                    map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
-                    map('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-                    map('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-
-                    map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-                    map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-                    map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-                    map('K', vim.lsp.buf.hover, 'Hover Documentation')
-                    map('<leader>ld', vim.diagnostic.open_float, 'Show [L]ine [D]iagnostic')
-                end,
-            })
-
             local lspconfig = require('lspconfig')
 
             -- lua
@@ -72,7 +53,7 @@ return {
 
             -- eslint
             lspconfig.eslint.setup {
-                on_attach = function(client, bufnr)
+                on_attach = function(_, bufnr)
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = bufnr,
                         command = "EslintFixAll",
@@ -80,8 +61,9 @@ return {
                 end,
             }
 
-            -- relay
-            -- lspconfig.relay_lsp.setup {}
+            lspconfig.relay_lsp.setup {
+                auto_start_compiler = false,
+            }
 
             -- rust
             lspconfig.rust_analyzer.setup {
