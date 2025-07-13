@@ -75,6 +75,10 @@ return {
                     },
                 },
             }
+
+            lspconfig.graphql.setup {
+                filetypes = { 'graphql' },
+            }
         end,
     }
 }
