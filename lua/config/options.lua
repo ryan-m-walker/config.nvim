@@ -2,6 +2,19 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- https://vale.rocks/posts/neovim
+-- set relative number when in normal mode
+vim.api.nvim_create_autocmd(
+    { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
+    { pattern = "*", command = "if &nu && mode() != 'i' | set rnu | endif", }
+)
+
+-- set no relative number when in insert mode
+vim.api.nvim_create_autocmd(
+    { "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
+    { pattern = "*", command = "if &nu | set nornu | endif", }
+)
+
 -- spacing
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
