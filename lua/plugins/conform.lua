@@ -7,7 +7,7 @@ return {
         cmd = { "ConformInfo" },
         opts = {
             formatters_by_ft = {
-                lua = { "stylua" }
+                lua = { "stylua" },
             },
             format_on_save = function(bufnr)
                 -- Skip formatting for TS/JS files since ESLint handles them

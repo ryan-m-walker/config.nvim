@@ -79,6 +79,37 @@ return {
             lspconfig.graphql.setup {
                 filetypes = { 'graphql' },
             }
+
+            -- Go
+            lspconfig.gopls.setup {
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedparams = true,
+                        },
+                        staticcheck = true,
+                        gofumpt = true,
+                    },
+                },
+            }
+
+            -- C/C++
+            lspconfig.clangd.setup {
+                cmd = { 'clangd', '--background-index', '--clang-tidy', '--header-insertion=iwyu' },
+                filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+                root_dir = lspconfig.util.root_pattern('compile_commands.json', '.clangd', '.git'),
+                init_options = {
+                    clangdFileStatus = true,
+                    usePlaceholders = true,
+                    completeUnimported = true,
+                    semanticHighlighting = true,
+                },
+                settings = {
+                    clangd = {
+                        fallbackFlags = { '-std=c17' },
+                    },
+                },
+            }
         end,
     }
 }

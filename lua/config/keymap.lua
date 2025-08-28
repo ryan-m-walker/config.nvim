@@ -27,6 +27,8 @@ vim.keymap.set('n', '<leader>t\\', ':vsplit term://zsh<CR>',
 vim.keymap.set('n', '<leader>rl', ':set relativenumber!<CR>',
     { noremap = true, silent = true, desc = 'Toggle [R]elative [L]ine number' })
 
+-- File ops
+vim.keymap.set('n', '<leader>fp', ':Filepath<CR>', { noremap = true, silent = true, desc = '[F]ile [P]ath' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
