@@ -15,11 +15,21 @@ vim.api.nvim_create_autocmd(
     { pattern = "*", command = "if &nu | set nornu | endif", }
 )
 
--- spacing
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+-- spacing (default: 2 spaces)
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+
+-- TypeScript files: 4 spaces
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "typescript", "typescriptreact" },
+    callback = function()
+        vim.opt_local.tabstop = 4
+        vim.opt_local.shiftwidth = 4
+        vim.opt_local.softtabstop = 4
+    end,
+})
 
 vim.opt.showmode = false
 
