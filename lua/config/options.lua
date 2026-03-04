@@ -61,6 +61,13 @@ vim.schedule(function()
     vim.opt.clipboard = 'unnamedplus'
 end)
 
+-- force-kill LSP clients on exit to avoid slow shutdown
+vim.api.nvim_create_autocmd("VimLeavePre", {
+    callback = function()
+        vim.lsp.stop_client(vim.lsp.get_clients(), true)
+    end,
+})
+
 -- C programming specific settings
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "c", "h" },
