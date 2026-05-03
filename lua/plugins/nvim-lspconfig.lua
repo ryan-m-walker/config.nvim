@@ -132,6 +132,16 @@ return {
         },
       })
 
+      vim.lsp.config('hls', {
+        filetypes = { 'haskell', 'lhaskell', 'cabal' },
+        root_markers = { 'hie.yaml', 'stack.yaml', 'cabal.project', '*.cabal', 'package.yaml', '.git' },
+        settings = {
+          haskell = {
+            formattingProvider = 'ormolu',
+          },
+        },
+      })
+
       vim.lsp.enable({
         'lua_ls',
         'eslint',
@@ -142,6 +152,7 @@ return {
         'gopls',
         'clangd',
         'tsgo',
+        'hls',
       })
     end,
   }
