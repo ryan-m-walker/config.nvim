@@ -24,52 +24,31 @@ return {
       },
     },
     config = function()
-      local lspconfig = require('lspconfig')
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+      if ok then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
 
-      -- lua
-      lspconfig.lua_ls.setup {}
+      vim.lsp.config('*', {
+        capabilities = capabilities,
+      })
 
-      -- astro
-      -- lspconfig.astro.setup {}
+      local eslint_on_attach = vim.lsp.config.eslint.on_attach
+      vim.lsp.config('eslint', {
+        on_attach = function(client, bufnr)
+          if eslint_on_attach then
+            eslint_on_attach(client, bufnr)
+          end
 
-      -- typescript -- using tsgo
-      -- lspconfig.vtsls.setup {
-      --     settings = {
-      --         vtsls = {
-      --             experimental = {
-      --                 maxInlayHintLength = 50,
-      --             },
-      --             tsserver = {
-      --                 maxTsServerMemory = 8192, -- 8GB of memory
-      --             },
-      --         },
-      --         typescript = {
-      --             tsserver = {
-      --                 maxTsServerMemory = 8192, -- 8GB of memory
-      --             },
-      --         },
-      --     },
-      -- }
-
-      -- tailwind
-      lspconfig.tailwindcss.setup {}
-
-      -- eslint
-      lspconfig.eslint.setup {
-        on_attach = function(_, bufnr)
-          vim.api.nvim_create_autocmd("BufWritePre", {
+          vim.api.nvim_create_autocmd('BufWritePre', {
             buffer = bufnr,
-            command = "EslintFixAll",
+            command = 'LspEslintFixAll',
           })
         end,
-      }
+      })
 
-      lspconfig.relay_lsp.setup {
-        auto_start_compiler = false,
-      }
-
-      -- rust
-      lspconfig.rust_analyzer.setup {
+      vim.lsp.config('rust_analyzer', {
         settings = {
           ['rust-analyzer'] = {
             checkOnSave = {
@@ -77,38 +56,13 @@ return {
             },
           },
         },
-      }
+      })
 
-      -- biome (only starts if a biome config is present)
-      -- lspconfig.biome.setup {
-      --   root_dir = lspconfig.util.root_pattern('biome.json', 'biome.jsonc'),
-      -- on_attach = function(_, bufnr)
-      --   vim.api.nvim_create_autocmd("BufWritePre", {
-      --     buffer = bufnr,
-      --     callback = function()
-      --       local params = vim.lsp.util.make_range_params()
-      --       params.context = { only = { "source.fixAll.biome" }, diagnostics = {} }
-      --       local result = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 200)
-      --       for _, res in pairs(result or {}) do
-      --         for _, action in pairs(res.result or {}) do
-      --           if action.edit then
-      --             vim.lsp.util.apply_workspace_edit(action.edit, "utf-8")
-      --           elseif action.command then
-      --             vim.lsp.buf.execute_command(action.command)
-      --           end
-      --         end
-      --       end
-      --     end,
-      --   })
-      -- end,
-      -- }
-
-      lspconfig.graphql.setup {
+      vim.lsp.config('graphql', {
         filetypes = { 'graphql' },
-      }
+      })
 
-      -- Python
-      lspconfig.pyright.setup {
+      vim.lsp.config('pyright', {
         settings = {
           python = {
             analysis = {
@@ -119,18 +73,16 @@ return {
             },
           },
         },
-      }
+      })
 
-      -- Ruff (Python linter/formatter)
-      lspconfig.ruff.setup {
+      vim.lsp.config('ruff', {
         on_attach = function(client, _)
           -- Disable hover in favor of pyright
           client.server_capabilities.hoverProvider = false
         end,
-      }
+      })
 
-      -- Go
-      lspconfig.gopls.setup {
+      vim.lsp.config('gopls', {
         settings = {
           gopls = {
             analyses = {
@@ -140,13 +92,12 @@ return {
             gofumpt = true,
           },
         },
-      }
+      })
 
-      -- C/C++
-      lspconfig.clangd.setup {
+      vim.lsp.config('clangd', {
         cmd = { 'clangd', '--background-index', '--clang-tidy', '--header-insertion=iwyu' },
         filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
-        root_dir = lspconfig.util.root_pattern('compile_commands.json', '.clangd', '.git'),
+        root_markers = { 'compile_commands.json', '.clangd', '.git' },
         init_options = {
           clangdFileStatus = true,
           usePlaceholders = true,
@@ -158,35 +109,9 @@ return {
             fallbackFlags = { '-std=c17' },
           },
         },
-      }
+      })
 
-      local configs = require "lspconfig.configs"
-      if not configs.tsgo then
-        configs.tsgo = {
-          default_config = {
-            cmd = { "tsgo", "--lsp", "--stdio" },
-            filetypes = {
-              "javascript",
-              "javascriptreact",
-              "javascript.jsx",
-              "typescript",
-              "typescriptreact",
-              "typescript.tsx",
-            },
-            root_dir = lspconfig.util.root_pattern(
-              "tsconfig.json",
-              "jsconfig.json",
-              "package.json",
-              ".git",
-              "tsconfig.base.json"
-            ),
-            settings = {},
-          },
-        }
-      end
-
-      -- Optimized tsgo setup with performance settings
-      lspconfig.tsgo.setup {
+      vim.lsp.config('tsgo', {
         flags = {
           debounce_text_changes = 150,   -- Reduce LSP requests
           allow_incremental_sync = true, -- Use incremental sync
@@ -205,7 +130,19 @@ return {
             completeFunctionCalls = false, -- Reduce completion overhead
           },
         },
-      }
+      })
+
+      vim.lsp.enable({
+        'lua_ls',
+        'eslint',
+        'rust_analyzer',
+        'graphql',
+        'pyright',
+        'ruff',
+        'gopls',
+        'clangd',
+        'tsgo',
+      })
     end,
   }
 }

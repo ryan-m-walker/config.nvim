@@ -21,16 +21,6 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
--- TypeScript files: 4 spaces
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "typescript", "typescriptreact" },
-    callback = function()
-        vim.opt_local.tabstop = 4
-        vim.opt_local.shiftwidth = 4
-        vim.opt_local.softtabstop = 4
-    end,
-})
-
 vim.opt.showmode = false
 
 -- mouse
@@ -64,7 +54,9 @@ end)
 -- force-kill LSP clients on exit to avoid slow shutdown
 vim.api.nvim_create_autocmd("VimLeavePre", {
     callback = function()
-        vim.lsp.stop_client(vim.lsp.get_clients(), true)
+        for _, client in ipairs(vim.lsp.get_clients()) do
+            client:stop(true)
+        end
     end,
 })
 
